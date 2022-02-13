@@ -22,32 +22,39 @@ using namespace std;
 // Computes a^n using multiprecision integers (cpp_int).
 // Not very efficient
 
- int power(int a, int n) {
-   long long int p = 1;
+//  int power(int a, int n) {
+//    long long int p = 1;
 
-  #pragma omp critical
-   for (int i=1;i<=n;i++) {
-     p*=a;
-     p = p%1000000;
-   }
-   return p % 1000000;
- }
+//   #pragma omp critical
+//    for (int i=1;i<=n;i++) {
+//      p*=a;
+//      p = p%1000000;
+//    }
+//    return p % 1000000;
+//  }
 
-// int powersum(int n, int m){
-//   int s = 0;
-//   for(int i = 1; i <= n;i++){
-//     s+= modpow(i, i, m);
-//     s%= m;
-//     }
-//   return s;
-//   }
+int power(long long int a, long long int n){
+
+  if(n == 0){
+    return 1;
+  }
+  if(a == 0){
+    return 0;
+  }
+  a = a*power(a, n - 1);
+  a = a%1000000;
+  return a;
+}
+
+
 
 int main() {
   long long int n;
   cin >> n;
   long long int sum = 0;
 
-  #pragma omp parallel for
+  #pragma omp parallel for \
+    reduction(+:sum) schedule(dynamic, 2)
   for (int i=1;i<=n;i++) {
     sum+=power(i,i) % 1000000;
   }
