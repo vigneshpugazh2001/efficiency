@@ -26,13 +26,7 @@ test: my_parallel
 	
 efftest: my_parallel
 	-chmod +rx timetest
-	-./timetest test.s.20000
-	-./timetest test.s.39119
-	-./timetest test.s.40000
 	-./timetest test.s.100000
-	-./timetest test.s.1M
-	-./timetest test.s.10M
-	-./timetest test.s.100M
 
 
 clean:

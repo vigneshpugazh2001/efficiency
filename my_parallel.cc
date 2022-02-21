@@ -54,7 +54,7 @@ int main() {
   long long int sum = 0;
 
   #pragma omp parallel for \
-    reduction(+:sum) schedule(dynamic, 2)
+    reduction(+:sum) schedule(runtime)
   for (int i=1;i<=n;i++) {
     sum+=power(i,i) % 1000000;
   }
